@@ -1,0 +1,16 @@
+{% extends 'layouts/main.twig' %}
+{% block content %}
+
+    <h2>Корзина</h2>
+
+    {% for product in basket %}
+    <div style="background-color: gray; color: white; width: 300px; padding: 20px; margin-bottom: 5px;">
+        <img width="200" src="./assets/img/big/{{product.img}}" alt="">
+        <h3>{{product.title}}</h3>
+        <p>Стоимость: {{product.price}} $</p>
+        <p>Количество: {{product.quantity}}</p>
+        <p>Общая стоимость: {{product.quantity * product.price}} $</p>
+    </div>
+    {% endfor %}
+
+{% endblock %}
