@@ -1,0 +1,17 @@
+{% extends 'layouts/main.twig' %}
+{% block content %}
+
+    <h2>Каталог</h2>
+    
+    {% for product in catalog %}
+
+        <img width="200" src="./assets/img/big/{{product.img}}" alt="">
+        <h3><a href="./?c=product&a=index&id={{product.id}}">{{product.title}}</a></h3>
+        <p>price: {{product.price}}</p>
+        <form action="./?c=basket&a=insert&id={{product.id}}" method="post">
+            <button type="submit">Купить</button>
+        </form>
+    {% endfor %}
+
+<a href="./?c=catalog&a=index&page=<?= $page ?>">Еще</a>
+{% endblock %}

@@ -2,8 +2,16 @@
 
 namespace app\controllers;
 
+use app\interfaces\IRender;
+
 class Controller
 {
+    private $render;
+
+    public function __construct(IRender $render)
+    {
+        $this->render = $render;
+    }
 
     public function runAction($action)
     {
@@ -19,18 +27,7 @@ class Controller
 
     public function render($template, $params = [])
     {
-        return $this->renderTemplate('layouts/main', [
-            'menu' => $this->renderTemplate('menu', $params),
-            'content' => $this->renderTemplate($template, $params)
-        ]);
-    }
-
-    public function renderTemplate($template, $params = [])
-    {
-        ob_start();
-        extract($params);
-        include VIEWS_DIR . $template . '.php';
-        return ob_get_clean();
+        return $this->render->renderTemplate($template, $params);
     }
 
     public function index()
