@@ -14,6 +14,7 @@ class TwigRender implements IRender
         $twig = new \Twig\Environment($loader, [
             'debug' => true,
         ]);
+        $twig->addGlobal('session', $_SESSION);
         $twig->addExtension(new \Twig\Extension\DebugExtension());
         return $twig->render($template . '.twig', $params);
     }
