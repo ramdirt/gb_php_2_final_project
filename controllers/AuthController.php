@@ -44,11 +44,14 @@ class AuthController extends Controller
 
     public function signup()
     {
+        // TODO Реализовать страницу регистрации
         echo $this->render('auth/signup');
     }
 
     public function save()
     {
+        // TODO Реализовать метод сохранения пользователя
+        // после регистрации 
         echo $_POST;
     }
 

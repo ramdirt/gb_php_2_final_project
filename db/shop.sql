@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 19 2022 г., 16:16
+-- Время создания: Апр 21 2022 г., 11:52
 -- Версия сервера: 10.4.22-MariaDB
 -- Версия PHP: 7.4.27
 
@@ -40,7 +40,7 @@ CREATE TABLE `basket` (
 --
 
 INSERT INTO `basket` (`id`, `user_id`, `session_id`, `product_id`, `quantity`) VALUES
-(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 5),
+(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 11),
 (42, NULL, 'ae62d226db13274f785ccf15103dcc19', 102, 2),
 (44, NULL, 'ae62d226db13274f785ccf15103dcc19', 104, 1),
 (46, NULL, 'ae62d226db13274f785ccf15103dcc19', 106, 1);
@@ -290,13 +290,13 @@ ALTER TABLE `orders_details`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
