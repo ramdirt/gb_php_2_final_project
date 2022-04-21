@@ -1,7 +1,7 @@
 <?php
 session_start();
+var_dump($_SESSION);
 
-use app\engine\Render;
 use app\engine\Autoload;
 use app\engine\TwigRender;
 
