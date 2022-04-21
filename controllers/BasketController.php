@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Product;
 use app\models\Basket;
+use app\engine\Router;
 
 class BasketController extends Controller
 {
@@ -29,6 +29,7 @@ class BasketController extends Controller
         } else {
             $product->quantity = (int)$product->quantity + 1;
             echo "Увеличено количетсво товара для {$product->id}";
+            Router::redirect('basket');
         }
         $product->save();
     }

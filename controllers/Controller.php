@@ -2,15 +2,18 @@
 
 namespace app\controllers;
 
+use app\engine\Router;
 use app\interfaces\IRender;
 
 class Controller
 {
     private $render;
+    public $router;
 
     public function __construct(IRender $render)
     {
         $this->render = $render;
+        $this->router = new Router();
     }
 
     public function runAction($action)

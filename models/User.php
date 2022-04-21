@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+use app\engine\Db;
 
-class User extends Model
+
+class User extends DBModel
 {
     public $id;
     public $name;
@@ -30,8 +32,19 @@ class User extends Model
     }
 
 
-    protected function getTableName()
+    protected static function getTableName()
     {
         return 'users';
+    }
+
+    public static function getUser($login, $password)
+    {
+        $tableName = static::getTableName();
+        $password = md5($password);
+
+        $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
+        $user = Db::getInstance()->queryOneObject($sql, ['login' => $login, 'password' => $password], static::class);
+
+        return $user;
     }
 }
