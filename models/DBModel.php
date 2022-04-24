@@ -106,4 +106,11 @@ abstract class DBModel extends Model
         $sql = "SELECT * FROM {$tableName} LIMIT 0, ?";
         return Db::getInstance()->queryLimit($sql, $limit);
     }
+
+    public static function getWhere($name, $value)
+    {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE {$name} = :value";
+        return Db::getInstance()->queryOneObject($sql, ['value' => $value], static::class);
+    }
 }

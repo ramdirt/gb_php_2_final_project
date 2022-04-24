@@ -6,6 +6,6 @@ class Router
 {
     public static function redirect($page, $action = 'index')
     {
-        header('Location:' . "./?c={$page}&a={$action}");
+        header('Location:' . "/{$page}/{$action}");
     }
 }

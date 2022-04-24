@@ -37,14 +37,17 @@ class User extends DBModel
         return 'users';
     }
 
-    public static function getUser($login, $password)
+    public static function isAuth($login, $password)
     {
         $tableName = static::getTableName();
         $password = md5($password);
 
         $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
-        $user = Db::getInstance()->queryOneObject($sql, ['login' => $login, 'password' => $password], static::class);
+        $isAuth = Db::getInstance()->queryOne($sql, [
+            'login' => $login,
+            'password' => $password
+        ]);
 
-        return $user;
+        return $isAuth ? true : false;
     }
 }

@@ -4,18 +4,23 @@ namespace app\engine;
 
 use app\interfaces\IRender;
 
-require_once '../vendor/autoload.php';
 
 class TwigRender implements IRender
 {
-    public function renderTemplate($template, $params = [])
+    protected $twig;
+
+    public function __construct()
     {
         $loader = new \Twig\Loader\FilesystemLoader('../templates');
-        $twig = new \Twig\Environment($loader, [
+        $this->twig = new \Twig\Environment($loader, [
             'debug' => true,
         ]);
-        $twig->addGlobal('session', $_SESSION);
-        $twig->addExtension(new \Twig\Extension\DebugExtension());
-        return $twig->render($template . '.twig', $params);
+    }
+
+    public function renderTemplate($template, $params = [])
+    {
+        $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        return $this->twig->render($template . '.twig', $params);
     }
 }

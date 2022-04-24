@@ -1,10 +1,10 @@
-<a href="./">Главная</a>
-<a href="./?c=catalog&a=index">Каталог</a><br>
-<a href="./?c=basket&a=index">Корзина</a><br>
+<a href="/">Главная</a>
+<a href="/catalog">Каталог</a><br>
+<a class="basketCount" href="/basket">Корзина(0)</a><br>
 {% if not session.user %}
-    <a href="./?c=auth&a=index">Войти</a><br>
+    <a href="/auth">Войти</a><br>
 {% else %}
-    <a href="./?c=cabinet&a=index">Личный кабинет</a><br>
-    <a href="./?c=auth&a=logout">Выйти</a><br>
+    <a href="/cabinet">Личный кабинет</a><br>
+    <a href="/auth/logout">Выйти</a><br>
     <p>Добро пожаловать {{ session.user.name }}<p>
 {% endif %}
