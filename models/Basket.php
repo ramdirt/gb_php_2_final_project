@@ -43,9 +43,8 @@ class Basket extends DBModel
     {
         $session_id = session_id();
         $tableName = static::getTableName();
-        $sql = "SELECT COUNT(*) FROM {$tableName} WHERE session_id = :session_id";
-        $count = Db::getInstance()->queryOne($sql, ['session_id' => $session_id])['COUNT(*)'];
-
+        $sql = "SELECT SUM(quantity) FROM {$tableName} WHERE session_id = :session_id";
+        $count = Db::getInstance()->queryOne($sql, ['session_id' => $session_id])['SUM(quantity)'];
         return (int) $count;
     }
 
@@ -63,6 +62,9 @@ class Basket extends DBModel
         return $basket;
     }
 
+    public static function deleteItemBasket($id)
+    {
+    }
 
     public static function getTableName()
     {

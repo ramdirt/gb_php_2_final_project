@@ -5,7 +5,6 @@ use app\engine\Autoload;
 use app\engine\TwigRender;
 
 $url = explode("/", $_SERVER['REQUEST_URI']);
-var_dump($url);
 
 include dirname(__DIR__) .  "/engine/Autoload.php";
 include dirname(__DIR__) . "/config/config.php";
