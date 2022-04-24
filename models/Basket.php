@@ -31,23 +31,24 @@ class Basket extends DBModel
 
     public static function getBasket()
     {
-        //запрос на корзину
-        $products = [];
-
         $session_id = session_id();
         $tableName = static::getTableName();
-        $sql = "SELECT * FROM {$tableName} WHERE session_id = :session_id";
+        $sql = "SELECT basket.id as basket_id, products.id as product_id, products.title, products.img, products.description, products.price, basket.quantity FROM {$tableName}, `products` WHERE session_id = :session_id AND basket.product_id = products.id";
         $basket = Db::getInstance()->queryAll($sql, ['session_id' => $session_id]);
 
-        foreach ($basket as $item) {
-            $product = Product::getOne($item['product_id']);
-            $product->quantity = $item['quantity'];
-            $product->save();
-            $products[] = $product;
-        }
-
-        return $products;
+        return $basket;
     }
+
+    public static function getCountItemBasket()
+    {
+        $session_id = session_id();
+        $tableName = static::getTableName();
+        $sql = "SELECT COUNT(*) FROM {$tableName} WHERE session_id = :session_id";
+        $count = Db::getInstance()->queryOne($sql, ['session_id' => $session_id])['COUNT(*)'];
+
+        return (int) $count;
+    }
+
 
     public static function isProductInBasket($id)
     {

@@ -10,13 +10,14 @@ class BasketController extends Controller
     public function index()
     {
         $basket = Basket::getBasket();
+        echo Basket::getCountItemBasket();
 
         echo $this->render('basket/index', [
             'basket' => $basket
         ]);
     }
 
-    public function insert()
+    public function add()
     {
         $id = $_GET['id'];
         $session = session_id();

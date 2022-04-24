@@ -30,16 +30,17 @@ class AuthController extends Controller
             die('Вы не заполнили все поля');
         }
 
-        $user = User::getUser($login, $password);
+        $auth = User::isAuth($login, $password);
 
-        $_SESSION['user'] = [
-            "id" => $user->id,
-            "name" => $user->name,
-            "login" => $user->login,
-            "email" => $user->email,
-        ];
-
-        $this->router->redirect('');
+        if ($auth) {
+            $_SESSION['user'] = [
+                "login" => $login,
+            ];
+            $this->router->redirect('public');
+        } else {
+            $this->router->redirect('auth');
+            die();
+        }
     }
 
     public function signup()
@@ -58,6 +59,6 @@ class AuthController extends Controller
     public function logout()
     {
         unset($_SESSION['user']);
-        $this->router->redirect('');
+        $this->router->redirect('public');
     }
 }

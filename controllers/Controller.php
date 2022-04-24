@@ -3,16 +3,17 @@
 namespace app\controllers;
 
 use app\engine\Router;
+use app\engine\TwigRender;
 use app\interfaces\IRender;
 
 class Controller
 {
-    private $render;
-    public $router;
+    protected $render;
+    protected $router;
 
-    public function __construct(IRender $render)
+    public function __construct()
     {
-        $this->render = $render;
+        $this->render = new TwigRender;
         $this->router = new Router();
     }
 
@@ -31,10 +32,5 @@ class Controller
     public function render($template, $params = [])
     {
         return $this->render->renderTemplate($template, $params);
-    }
-
-    public function index()
-    {
-        echo $this->render('index', []);
     }
 }
