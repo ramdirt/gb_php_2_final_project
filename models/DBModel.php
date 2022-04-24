@@ -27,11 +27,6 @@ abstract class DBModel extends Model
         $tableName = static::getTableName();
 
         $sql = "INSERT INTO `{$tableName}`($columns) VALUES ($values)";
-        echo $sql;
-        echo '<br>';
-        var_dump($params);
-
-        echo '<br>';
 
         Db::getInstance()->execute($sql, $params);
         $this->id = Db::getInstance()->lastInsertId();
@@ -65,8 +60,6 @@ abstract class DBModel extends Model
 
     public function save()
     {
-        //TODO реализовать умный save
-        //if (???) $this->insert(); else $this->update();
         if ($this->id) {
             $this->update();
         } else {

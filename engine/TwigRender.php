@@ -2,6 +2,7 @@
 
 namespace app\engine;
 
+use app\models\Basket;
 use app\interfaces\IRender;
 
 
@@ -20,6 +21,7 @@ class TwigRender implements IRender
     public function renderTemplate($template, $params = [])
     {
         $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addGlobal('countItemBasket', Basket::getCountItemBasket());
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
         return $this->twig->render($template . '.twig', $params);
     }

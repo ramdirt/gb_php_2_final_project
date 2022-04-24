@@ -4,12 +4,14 @@
     <h2>Корзина</h2>
 
     {% for product in basket %}
-    <div style="background-color: gray; color: white; width: 300px; padding: 20px; margin-bottom: 5px;">
+    <div data-id="{{product.basket_id}}" style="background-color: gray; color: white; width: 300px; padding: 20px; margin-bottom: 5px;">
         <img width="200" src="../public/assets/img/big/{{product.img}}" alt="">
         <h3>{{product.title}}</h3>
         <p>Стоимость: {{product.price}} $</p>
-        <p>Количество: {{product.quantity}}</p>
+        <p>Количество: <span class="product-quantity">{{product.quantity}}</span></p>
         <p>Общая стоимость: {{product.quantity * product.price}} $</p>
+        <button data-id="{{product.basket_id}}" class="btn-delete-basket">Удалить из корзины</button>
+
     </div>
     {% endfor %}
 
