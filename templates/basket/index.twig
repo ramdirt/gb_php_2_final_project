@@ -9,7 +9,7 @@
         <h3>{{product.title}}</h3>
         <p>Стоимость: {{product.price}} $</p>
         <p>Количество: <span class="product-quantity">{{product.quantity}}</span></p>
-        <p>Общая стоимость: {{product.quantity * product.price}} $</p>
+        <p>Общая стоимость: <span class="product-all-price"> {{product.quantity * product.price}} $</span></p>
         <button data-id="{{product.basket_id}}" class="btn-delete-basket">Удалить из корзины</button>
 
     </div>

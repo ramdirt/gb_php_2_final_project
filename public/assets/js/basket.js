@@ -9,7 +9,6 @@ if (buttonsAddBasket) {
         });
     });
     async function addBasket(id) {
-        console.log(id);
         let formData = new FormData();
         formData.append("id", id);
 
@@ -39,7 +38,6 @@ if (buttonsDeleteBasket) {
     async function deleteBasket(id) {
         let formData = new FormData();
         formData.append("id", id);
-        console.log(id);
 
         const res = await fetch("/basket/delete", {
             method: "POST",
@@ -48,14 +46,12 @@ if (buttonsDeleteBasket) {
 
         const data = await res.json();
 
-        console.log(data);
-
         if (data.status === true) {
             div = document.querySelector(`[data-id="${id}"]`);
-            if (data.action) {
-                data.action == "delete"
-                    ? div.remove()
-                    : (div.querySelector("span").innerText -= 1);
+            if (data.action == "delete") {
+                div.remove();
+            } else {
+                div.querySelector(".product-quantity").innerText -= 1;
             }
             countItemBasket.innerText = data.countItemBasket;
         } else {

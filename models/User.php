@@ -50,4 +50,27 @@ class User extends DBModel
 
         return $isAuth ? true : false;
     }
+    public static function createHashAndCookiesForUser($login)
+    {
+        $tableName = static::getTableName();
+        $hash = uniqid(rand(), true);
+        $sql = "UPDATE {$tableName} SET hash = :hash WHERE login = :login";
+        Db::getInstance()->queryOne($sql, [
+            'login' => $login,
+            'hash' => $hash
+        ]);
+        setcookie("hash", $hash, time() + 20);
+    }
+
+    public static function authForCookie()
+    {
+        $hash = $_COOKIE['hash'];
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE hash = :hash";
+        $isAuth = Db::getInstance()->queryOneObject($sql, [
+            'hash' => $hash
+        ], static::class);
+
+        return $isAuth ? $isAuth : setcookie("hash");
+    }
 }
