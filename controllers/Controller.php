@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\engine\Router;
+use app\engine\Request;
 use app\engine\TwigRender;
 use app\interfaces\IRender;
 

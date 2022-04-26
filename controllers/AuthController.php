@@ -3,20 +3,32 @@
 namespace app\controllers;
 
 use app\models\User;
-use app\engine\Router;
+use app\engine\Request;
 
 class AuthController extends Controller
 {
 
     public function index()
     {
-        echo $this->render('auth/login');
+        if (isset($_COOKIE['hash'])) {
+            $user = User::authForCookie();
+
+            if ($user) {
+                $_SESSION['user'] = [
+                    "login" => $user->login,
+                ];
+                $this->router->redirect('public');
+            }
+        } else {;
+            echo $this->render('auth/login');
+        }
     }
 
     public function login()
     {
-        $login = $_POST['login'];
-        $password = $_POST['password'];
+        $login = (new Request())->params['login'];
+        $password = (new Request())->params['password'];
+        $saveCookie = (new Request())->params['save'];
 
         $error = array();
 
@@ -30,7 +42,14 @@ class AuthController extends Controller
             die('Вы не заполнили все поля');
         }
 
+
         $auth = User::isAuth($login, $password);
+
+        if (!empty($saveCookie)) {
+            User::createHashAndCookiesForUser($login);
+        }
+
+
 
         if ($auth) {
             $_SESSION['user'] = [
@@ -59,6 +78,8 @@ class AuthController extends Controller
     public function logout()
     {
         unset($_SESSION['user']);
+        session_regenerate_id();
+        session_destroy();
         $this->router->redirect('public');
     }
 }

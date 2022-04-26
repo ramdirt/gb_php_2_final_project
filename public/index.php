@@ -1,10 +1,8 @@
 <?php
 session_start();
 
+use app\engine\Request;
 use app\engine\Autoload;
-use app\engine\TwigRender;
-
-$url = explode("/", $_SERVER['REQUEST_URI']);
 
 include dirname(__DIR__) .  "/engine/Autoload.php";
 include dirname(__DIR__) . "/config/config.php";
@@ -12,8 +10,10 @@ include dirname(__DIR__) . "/config/config.php";
 spl_autoload_register([new Autoload(), 'loadClass']);
 require_once '../vendor/autoload.php';
 
-$controllerName = !empty($url[1]) ? $url[1] : 'public';
-$actionName = !empty($url[2]) ? $url[2] : 'index';
+$request = new Request();
+
+$controllerName = $request->controllerName ?: 'public';
+$actionName = $request->actionName ?: 'index';
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 
