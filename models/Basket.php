@@ -62,6 +62,16 @@ class Basket extends DBModel
         return $basket;
     }
 
+    public static function deleteBasket()
+    {
+        $session_id = session_id();
+        $tableName = static::getTableName();
+        $sql = "DELETE FROM {$tableName} WHERE session_id = :session_id";
+        $basket = Db::getInstance()->queryOne($sql, ['session_id' => $session_id]);
+
+        return $basket ?? true;
+    }
+
     public static function deleteItemBasket($id)
     {
     }

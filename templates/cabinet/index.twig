@@ -7,5 +7,17 @@
         <li>Имя: {{ user.name }}</li>
         <li>Почта: {{ user.email }}</li>
     </ul>
+    <br>
+    <h3>Мои заказы</h3>
+    <ul>
+        {% if orders %}
+            {% for order in orders %}
+                <li>Заказ №{{ order.id }} <a href="/">Посмотреть</a></li>
+            {% endfor %}
+        {% else %}
+            <p>Нет заказов</p>
+        {% endif %}
+    </ul>
+    
 
 {% endblock %}
