@@ -26,7 +26,8 @@ abstract class DBModel extends Model
 
         $tableName = static::getTableName();
 
-        $sql = "INSERT INTO `{$tableName}`($columns) VALUES ($values)";
+        $sql = "INSERT INTO `{$tableName}` ($columns) VALUES ($values)";
+
 
         Db::getInstance()->execute($sql, $params);
         $this->id = Db::getInstance()->lastInsertId();
@@ -35,7 +36,6 @@ abstract class DBModel extends Model
 
     public function update()
     {
-        //TODO сделать update в идеале оптимальный, формировать set только по изменившимся полям
 
         $request = '';
 
@@ -76,13 +76,10 @@ abstract class DBModel extends Model
         return Db::getInstance()->execute($sql, ['id' => $this->id]);
     }
 
-
-
     public static function getOne($id)
     {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        //  return Db::getInstance()->queryOne($sql, ['id' => $id]);
         return Db::getInstance()->queryOneObject($sql, ['id' => $id], static::class);
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 21 2022 г., 11:52
+-- Время создания: Апр 26 2022 г., 14:27
 -- Версия сервера: 10.4.22-MariaDB
 -- Версия PHP: 7.4.27
 
@@ -40,10 +40,12 @@ CREATE TABLE `basket` (
 --
 
 INSERT INTO `basket` (`id`, `user_id`, `session_id`, `product_id`, `quantity`) VALUES
-(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 11),
+(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 12),
 (42, NULL, 'ae62d226db13274f785ccf15103dcc19', 102, 2),
 (44, NULL, 'ae62d226db13274f785ccf15103dcc19', 104, 1),
-(46, NULL, 'ae62d226db13274f785ccf15103dcc19', 106, 1);
+(46, NULL, 'ae62d226db13274f785ccf15103dcc19', 106, 1),
+(60, NULL, 'c2e9a5240b95cd3942dea0e973952200', 101, 4),
+(61, NULL, 'a9077caa8d3602d4897df6c4c062d50e', 101, 1);
 
 -- --------------------------------------------------------
 
@@ -180,17 +182,17 @@ CREATE TABLE `users` (
   `name` varchar(300) DEFAULT NULL,
   `login` varchar(100) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `password` varchar(255) DEFAULT NULL,
+  `hash` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `login`, `email`, `password`) VALUES
-(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '202cb962ac59075b964b07152d234b70'),
-(14, 'Алексей', 'admin', 'admin@mail.ru', '202cb962ac59075b964b07152d234b70'),
-(33, 'User', '125', NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `login`, `email`, `password`, `hash`) VALUES
+(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '202cb962ac59075b964b07152d234b70', '8159111546267e47597cd11.24465986'),
+(14, 'Алексей', 'admin', 'admin@mail.ru', '202cb962ac59075b964b07152d234b70', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -260,7 +262,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT для таблицы `category`

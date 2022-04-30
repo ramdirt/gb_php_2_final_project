@@ -2,17 +2,29 @@
 {% block content %}
 
     <h2>Корзина</h2>
+    {% if basket %}
+        {% for product in basket %}
+        <div data-id="{{product.basket_id}}" style="background-color: gray; color: white; width: 300px; padding: 20px; margin-bottom: 5px;">
+            <img width="200" src="../public/assets/img/big/{{product.img}}" alt="">
+            <h3>{{product.title}}</h3>
+            <p>Стоимость: {{product.price}} $</p>
+            <p>Количество: <span class="product-quantity">{{product.quantity}}</span></p>
+            <p>Общая стоимость: <span class="product-all-price"> {{product.quantity * product.price}} $</span></p>
+            <button data-id="{{product.basket_id}}" class="btn-delete-basket">Удалить из корзины</button>
 
-    {% for product in basket %}
-    <div data-id="{{product.basket_id}}" style="background-color: gray; color: white; width: 300px; padding: 20px; margin-bottom: 5px;">
-        <img width="200" src="../public/assets/img/big/{{product.img}}" alt="">
-        <h3>{{product.title}}</h3>
-        <p>Стоимость: {{product.price}} $</p>
-        <p>Количество: <span class="product-quantity">{{product.quantity}}</span></p>
-        <p>Общая стоимость: <span class="product-all-price"> {{product.quantity * product.price}} $</span></p>
-        <button data-id="{{product.basket_id}}" class="btn-delete-basket">Удалить из корзины</button>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>В корзине нет товаров</p>
+    {% endif %}
+    
+    <h2>Сделать заказ</h2>
 
-    </div>
-    {% endfor %}
+    <p>Введите данные для оформления</p>
+    <form method="post" action="/order/add">
+        <input type="text" name="name" placeholder="Введите ваше имя" {% if not basket %}disabled{%endif%} value="Алексей">
+        <input type="phone" name="phone" placeholder="Введите ваш телефон"{% if not basket %}disabled{%endif%} value="88005553535">
+        <button type="submit"{% if not basket %}disabled{%endif%}>Отправить</button>
+    </form>
 
 {% endblock %}
