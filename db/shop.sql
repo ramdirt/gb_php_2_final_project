@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 26 2022 г., 14:27
+-- Время создания: Апр 30 2022 г., 10:37
 -- Версия сервера: 10.4.22-MariaDB
 -- Версия PHP: 7.4.27
 
@@ -40,12 +40,13 @@ CREATE TABLE `basket` (
 --
 
 INSERT INTO `basket` (`id`, `user_id`, `session_id`, `product_id`, `quantity`) VALUES
-(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 12),
+(41, NULL, 'ae62d226db13274f785ccf15103dcc19', 101, 7),
 (42, NULL, 'ae62d226db13274f785ccf15103dcc19', 102, 2),
 (44, NULL, 'ae62d226db13274f785ccf15103dcc19', 104, 1),
 (46, NULL, 'ae62d226db13274f785ccf15103dcc19', 106, 1),
 (60, NULL, 'c2e9a5240b95cd3942dea0e973952200', 101, 4),
-(61, NULL, 'a9077caa8d3602d4897df6c4c062d50e', 101, 1);
+(61, NULL, 'a9077caa8d3602d4897df6c4c062d50e', 101, 1),
+(66, NULL, '7d27dd877c8fad2e60b1bc19698d9a76', 101, 3);
 
 -- --------------------------------------------------------
 
@@ -81,6 +82,8 @@ CREATE TABLE `comments` (
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
   `status_id` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -88,11 +91,12 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `status_id`) VALUES
-(53, 12, 2),
-(56, 14, 3),
-(57, 12, 1),
-(58, 12, 1);
+INSERT INTO `orders` (`id`, `user_id`, `name`, `phone`, `status_id`) VALUES
+(53, 12, NULL, '', 2),
+(56, 14, NULL, '', 3),
+(57, 12, NULL, '', 1),
+(58, 12, NULL, '', 1),
+(74, 12, 'Алексей', '88005553535', NULL);
 
 -- --------------------------------------------------------
 
@@ -122,7 +126,8 @@ INSERT INTO `orders_details` (`id`, `order_id`, `product_id`, `product_name`, `p
 (22, 56, 1, 'Покрышка 1', 60, 1),
 (23, 56, 2, 'Покрышка 2', 70, 2),
 (24, 57, 1, 'Покрышка 1', 60, 3),
-(25, 57, 5, 'Покрышка 5', 90, 2);
+(25, 57, 5, 'Покрышка 5', 90, 2),
+(34, 74, 101, 'Не пицца', 150, 4);
 
 -- --------------------------------------------------------
 
@@ -191,7 +196,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `login`, `email`, `password`, `hash`) VALUES
-(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '202cb962ac59075b964b07152d234b70', '8159111546267e47597cd11.24465986'),
+(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '202cb962ac59075b964b07152d234b70', '284730776626a7ef91f59f5.15899951'),
 (14, 'Алексей', 'admin', 'admin@mail.ru', '202cb962ac59075b964b07152d234b70', NULL);
 
 --
@@ -222,9 +227,7 @@ ALTER TABLE `comments`
 -- Индексы таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `status_id` (`status_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `orders_details`
@@ -262,7 +265,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
@@ -280,13 +283,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT для таблицы `orders_details`
 --
 ALTER TABLE `orders_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
@@ -326,14 +329,7 @@ ALTER TABLE `comments`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `orders_details`
---
-ALTER TABLE `orders_details`
-  ADD CONSTRAINT `orders_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
