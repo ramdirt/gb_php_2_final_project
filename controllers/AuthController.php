@@ -42,7 +42,6 @@ class AuthController extends Controller
             die('Вы не заполнили все поля');
         }
 
-
         $auth = User::isAuth($login, $password);
 
         if (!empty($saveCookie)) {

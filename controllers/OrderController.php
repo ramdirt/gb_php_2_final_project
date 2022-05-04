@@ -15,9 +15,10 @@ class OrderController extends Controller
         $name = (new Request())->params['name'];
         $phone = (new Request())->params['phone'];
         $basket = Basket::getBasket();
-        $user_id = (int) User::getWhere('login', $_SESSION['user']['login'])->id ?? null;
+        $session_id = session_id();
+        $user_id = isset($_SESSION['user']) ? User::getWhere('login', $_SESSION['user']['login'])->id : null;
 
-        $order = new Order($user_id, $name, $phone);
+        $order = new Order($user_id, $name, $phone, $session_id, 1);
 
         $order->save();
 
@@ -38,8 +39,20 @@ class OrderController extends Controller
         echo "<a href='/'>На главную</a>";
     }
 
-    public function show()
+    public static function update_status()
     {
-        // TODO Сделать состава заказа на страницу
+        User::isAdmin();
+
+        $order_id = (new Request())->params['order_id'];
+        $status_id = (new Request())->params['status_id'];
+
+        $order = Order::getOne($order_id);
+        $order->status_id = $status_id;
+        $order->update();
+
+        echo json_encode([
+            'status' => true,
+            'status_id' => $order->status_id
+        ]);
     }
 }

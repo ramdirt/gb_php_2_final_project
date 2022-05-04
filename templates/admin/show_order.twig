@@ -1,0 +1,24 @@
+{% extends 'layouts/main.twig' %}
+{% block content %}
+
+<h2 class="order_id "id="{{order_id}}">Состав заказа №{{order_id}}</h2>
+<form>  
+    <label> Cтатус заказа </label>
+     
+    <select>
+        {% for status in all_status %} 
+            <option class="status_order" data-id="{{status.id}}" value = "{{status.id}}" {% if status_order == status.name %}selected{% endif %}>{{status.name}}</option>
+        {% endfor %}   
+    </select>
+
+</form>  
+
+
+<div>
+    {% for product in order %}
+        <p>{{product.product_name}} || Количество: {{product.quantity}} || Стоимость {{product.price * product.quantity}}</p>
+    {% endfor %}
+    <br>
+    <p>Итоговая стоимость: {{price}}</p>
+</div>
+{% endblock %}

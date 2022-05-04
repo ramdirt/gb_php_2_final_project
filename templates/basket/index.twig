@@ -22,9 +22,9 @@
 
     <p>Введите данные для оформления</p>
     <form method="post" action="/order/add">
-        <input type="text" name="name" placeholder="Введите ваше имя" {% if not basket %}disabled{%endif%} value="Алексей">
-        <input type="phone" name="phone" placeholder="Введите ваш телефон"{% if not basket %}disabled{%endif%} value="88005553535">
-        <button type="submit"{% if not basket %}disabled{%endif%}>Отправить</button>
+        <input type="text" name="name" placeholder="Введите ваше имя"  value="Алексей" required>
+        <input type="phone" name="phone" placeholder="Введите ваш телефон" value="88005553535" required>
+        <button type="submit">Отправить</button>
     </form>
 
 {% endblock %}

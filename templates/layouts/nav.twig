@@ -6,5 +6,10 @@
 {% else %}
     <a href="/cabinet">Личный кабинет</a><br>
     <a href="/auth/logout">Выйти</a><br>
-    <p>Добро пожаловать {{ session.user.name }}<p>
+    {% if session.user.login == 'admin' %}
+    <a href="/admin/index">Панель администратора</a><br>
+    {% endif %}    
+    <p>Добро пожаловать {{ session.user.login }}<p>
+
+
 {% endif %}
