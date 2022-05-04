@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\engine\Db;
+
 class OrderDetails extends DBModel
 {
     protected $id;
@@ -31,5 +33,26 @@ class OrderDetails extends DBModel
     public static function getTableName()
     {
         return 'orders_details';
+    }
+
+    public static function getOrderDetails($order_id)
+    {
+        $products = OrderDetails::getWhereAll('order_id', $order_id);
+        $status_id = (int) Order::getOne($order_id)->status_id;
+
+
+        $sql = "SELECT * FROM `status` WHERE id = :id";
+        $status = Db::getInstance()->queryOne($sql, ['id' => $status_id])['name'];
+
+        $price_sum = 0;
+        foreach ($products as $item) {
+            $price_sum += $item['price'] * $item['quantity'];
+        }
+
+        return [
+            'status' => $status,
+            'products' => $products,
+            'price' => $price_sum
+        ];
     }
 }

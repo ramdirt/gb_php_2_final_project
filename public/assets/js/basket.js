@@ -59,3 +59,33 @@ if (buttonsDeleteBasket) {
         }
     }
 }
+
+const selectStatusOrder = document.querySelector("select");
+if (selectStatusOrder) {
+    selectStatusOrder.onchange = () => {
+        let status_id = selectStatusOrder.selectedIndex + 1;
+        let order_id = document.querySelector(".order_id").id;
+
+        updateStatusOrder(order_id, status_id);
+
+        async function updateStatusOrder(order_id, status_id) {
+            console.log(status_id);
+            let formData = new FormData();
+            formData.append("status_id", status_id);
+            formData.append("order_id", order_id);
+
+            const res = await fetch("/order/update_status", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            if (data.status === true) {
+                alert("статус обновлен");
+            } else {
+                alert("Ошибка обновления");
+            }
+        }
+    };
+}

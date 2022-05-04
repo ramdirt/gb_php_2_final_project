@@ -40,15 +40,13 @@ class User extends DBModel
     public static function isAuth($login, $password)
     {
         $tableName = static::getTableName();
-        $password = md5($password);
 
-        $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
-        $isAuth = Db::getInstance()->queryOne($sql, [
+        $sql = "SELECT * FROM {$tableName} WHERE login = :login";
+        $user = Db::getInstance()->queryOne($sql, [
             'login' => $login,
-            'password' => $password
         ]);
 
-        return $isAuth ? true : false;
+        return password_verify($password, $user['password']);
     }
     public static function createHashAndCookiesForUser($login)
     {
@@ -72,5 +70,10 @@ class User extends DBModel
         ], static::class);
 
         return $isAuth ? $isAuth : setcookie("hash");
+    }
+
+    public static function isAdmin()
+    {
+        return $_SESSION['user']['login'] == 'admin' ?: die();
     }
 }

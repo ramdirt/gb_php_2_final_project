@@ -1,0 +1,16 @@
+{% extends 'layouts/main.twig' %}
+{% block content %}
+
+    <h3>Заказы пользователей</h3>
+    <ul>
+        {% if orders %}
+            {% for order in orders %}
+                <li><a href="/admin/show_order/?id={{order.id}}">Заказ №{{ order.id }} || Клиент: {{ order.phone }}</a></li>
+            {% endfor %}
+        {% else %}
+            <p>Нет заказов</p>
+        {% endif %}
+    </ul>
+    
+
+{% endblock %}
