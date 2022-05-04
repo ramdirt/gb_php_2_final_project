@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 30 2022 г., 10:37
+-- Время создания: Май 04 2022 г., 15:48
 -- Версия сервера: 10.4.22-MariaDB
 -- Версия PHP: 7.4.27
 
@@ -45,8 +45,7 @@ INSERT INTO `basket` (`id`, `user_id`, `session_id`, `product_id`, `quantity`) V
 (44, NULL, 'ae62d226db13274f785ccf15103dcc19', 104, 1),
 (46, NULL, 'ae62d226db13274f785ccf15103dcc19', 106, 1),
 (60, NULL, 'c2e9a5240b95cd3942dea0e973952200', 101, 4),
-(61, NULL, 'a9077caa8d3602d4897df6c4c062d50e', 101, 1),
-(66, NULL, '7d27dd877c8fad2e60b1bc19698d9a76', 101, 3);
+(61, NULL, 'a9077caa8d3602d4897df6c4c062d50e', 101, 1);
 
 -- --------------------------------------------------------
 
@@ -84,6 +83,7 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) NOT NULL,
+  `session_id` varchar(100) NOT NULL,
   `status_id` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -91,12 +91,9 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `name`, `phone`, `status_id`) VALUES
-(53, 12, NULL, '', 2),
-(56, 14, NULL, '', 3),
-(57, 12, NULL, '', 1),
-(58, 12, NULL, '', 1),
-(74, 12, 'Алексей', '88005553535', NULL);
+INSERT INTO `orders` (`id`, `user_id`, `name`, `phone`, `session_id`, `status_id`) VALUES
+(83, 12, 'Алексей', '88005553535', '0748a6135ac78a42f62f54f1acfd2025', 1),
+(84, 12, 'Алексей', '88005553535', '4d2f1cb8ed8e22ada024961505136aa5', 3);
 
 -- --------------------------------------------------------
 
@@ -118,16 +115,11 @@ CREATE TABLE `orders_details` (
 --
 
 INSERT INTO `orders_details` (`id`, `order_id`, `product_id`, `product_name`, `price`, `quantity`) VALUES
-(13, 53, 1, 'Покрышка 1', 60, 1),
-(14, 53, 4, 'Покрышка 4', 80, 1),
-(15, 53, 2, 'Покрышка 2', 70, 2),
-(20, 53, 2, 'Покрышка 2', 70, 2),
-(21, 53, 3, 'Покрышка 3', 80, 1),
-(22, 56, 1, 'Покрышка 1', 60, 1),
-(23, 56, 2, 'Покрышка 2', 70, 2),
-(24, 57, 1, 'Покрышка 1', 60, 3),
-(25, 57, 5, 'Покрышка 5', 90, 2),
-(34, 74, 101, 'Не пицца', 150, 4);
+(40, 83, 101, 'Не пицца', 150, 3),
+(41, 84, 101, 'Не пицца', 150, 4),
+(42, 84, 102, 'Товар 2', 300, 3),
+(43, 84, 103, 'Товар 3', 300, 1),
+(44, 84, 104, 'Товар 4', 300, 2);
 
 -- --------------------------------------------------------
 
@@ -149,7 +141,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `img`, `title`, `price`, `description`) VALUES
-(101, 1, '1.jpg', 'Не пицца', 150, 'Описание'),
+(101, 1, '1.jpg', 'Товар 1', 150, 'Описание'),
 (102, 1, '1.jpg', 'Товар 2', 300, 'Описание 2'),
 (103, 1, '1.jpg', 'Товар 3', 300, 'Описание 3'),
 (104, 1, '1.jpg', 'Товар 4', 300, 'Описание 4'),
@@ -196,8 +188,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `login`, `email`, `password`, `hash`) VALUES
-(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '202cb962ac59075b964b07152d234b70', '284730776626a7ef91f59f5.15899951'),
-(14, 'Алексей', 'admin', 'admin@mail.ru', '202cb962ac59075b964b07152d234b70', NULL);
+(12, 'Алексей', 'user', 'ramrimi@yandex.ru', '$2y$10$gnx9qcJMgbkiT2Jt04HvcOoXvcDQTcYxiDvWE14tISszvKZhuyy3q', '284730776626a7ef91f59f5.15899951'),
+(14, 'Алексей', 'admin', 'admin@mail.ru', '$2y$10$gnx9qcJMgbkiT2Jt04HvcOoXvcDQTcYxiDvWE14tISszvKZhuyy3q', '502070900626d08c1137b00.59227125');
 
 --
 -- Индексы сохранённых таблиц
@@ -265,7 +257,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
@@ -283,13 +275,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT для таблицы `orders_details`
 --
 ALTER TABLE `orders_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
